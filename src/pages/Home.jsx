@@ -7,7 +7,7 @@ const Home = () => {
       <header className={styles.header}>
         <h1>Tervetuloa Minun Sivulleni</h1>
         <p>
-          Täältä löydät tietoa minun harrastuksista, työstäni ja
+          Täältä löydät tietoa minun harrastuksistani, työstäni ja
           asiantuntemuksestani.
         </p>
       </header>
