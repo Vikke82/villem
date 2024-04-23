@@ -1,0 +1,40 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  color: #333;
+  background-color: white;
+}
+
+.header {
+  margin-bottom: 40px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.section {
+  background: rgb(16, 82, 129);
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  width: 80%;
+  max-width: 600px;
+}
+
+.footer {
+  margin-top: 40px;
+  color: #666;
+}
+
+@media (min-width: 768px) {
+  .content {
+    flex-direction: row;
+    justify-content: space-around;
+  }
+}
