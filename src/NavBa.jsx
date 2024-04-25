@@ -8,7 +8,7 @@ import enFlag from "./assets/images/en.jpg";
 
 import { useLanguage } from "./Context";
 
-function NavBar() {
+function NavBa() {
   const { changeLanguage } = useLanguage();
 
   return (
@@ -72,4 +72,4 @@ function NavBar() {
     // </nav>
   );
 }
-export default NavBar;
+export default NavBa;
