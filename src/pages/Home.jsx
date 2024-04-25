@@ -5,7 +5,7 @@ const Home = () => {
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <h1>Tervetuloa Minun Sivulleni</h1>
+        <h1>Under construction</h1>
         <p>
           Täältä löydät tietoa minun harrastuksistani, työstäni ja
           asiantuntemuksestani.
@@ -15,9 +15,7 @@ const Home = () => {
       <section className={styles.content}>
         <div className={styles.section}>
           <h2>Harrastukset</h2>
-          <p>
-            Rakastan ulkoilua, valokuvausta ja teknologian parissa työskentelyä.
-          </p>
+          <p>Voimanosto, teknologia, luonto.</p>
         </div>
         <div className={styles.section}>
           <h2>Työ</h2>
