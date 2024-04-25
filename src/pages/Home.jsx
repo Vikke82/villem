@@ -40,10 +40,6 @@ const Home = () => {
           </p>
         </div>
       </section>
-
-      <footer className={styles.footer}>
-        <p>© 2024 Ville Majava</p>
-      </footer>
     </div>
   );
 };

@@ -92,6 +92,23 @@ button {
   color: blue;
 }
 
+.footer {
+  padding: 20px;
+  background-color: #333;
+  color: white;
+  text-align: center;
+}
+
+.socialLink {
+  margin: 0 10px;
+  color: rgb(46, 55, 222);
+  font-size: 1.2em; /* Säädä koon mukaan */
+}
+
+.socialLink:hover {
+  color: #ddd;
+}
+
 @media (min-width: 768px) {
   .content {
     flex-direction: row;
