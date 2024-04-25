@@ -55,6 +55,43 @@
   height: 100vh; /* tämä määrittelee korkeuden koko näytön korkuiseksi */
 }
 
+.navbar {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+  background-color: #5377e4; /* Taustaväriä, muokkaa tarpeen mukaan */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Hieman varjostusta */
+}
+
+.language-buttons {
+  /* Jos haluat lisätilaa nappuloiden välille */
+  gap: 10px;
+}
+
+button {
+  padding: 8px 16px;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.navbarCustom {
+  background-color: #f8f9fa;
+}
+
+.navBrandCustom {
+  font-weight: bold;
+  color: red;
+}
+
+.navLinkCustom {
+  color: green;
+  padding: 10px;
+}
+
+.navLinkCustom:hover {
+  color: blue;
+}
+
 @media (min-width: 768px) {
   .content {
     flex-direction: row;

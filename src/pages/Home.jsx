@@ -1,11 +1,19 @@
 import React from "react";
 import styles from "../styles/Home.module.css";
+import { useLanguage } from "../Context";
 
 const Home = () => {
+  const { language } = useLanguage(); // Destructure language-muuttuja käyttöön
+
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <h1>Under construction</h1>
+        <h1>
+          {language === "fi"
+            ? "Tervetuloa kotisivulle"
+            : "Welcome to the Home Page"}
+        </h1>
+
         <p>
           Täältä löydät tietoa minun harrastuksistani, työstäni ja
           asiantuntemuksestani.

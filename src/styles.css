@@ -1,0 +1,18 @@
+.navbar {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+  background-color: #f0f0f0; /* Taustaväriä, muokkaa tarpeen mukaan */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Hieman varjostusta */
+}
+
+.language-buttons {
+  /* Jos haluat lisätilaa nappuloiden välille */
+  gap: 10px;
+}
+
+button {
+  padding: 8px 16px;
+  margin: 0 5px;
+  cursor: pointer;
+}
