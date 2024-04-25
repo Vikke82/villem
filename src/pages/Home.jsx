@@ -11,6 +11,7 @@ const Home = () => {
           asiantuntemuksestani.
         </p>
       </header>
+
       <section className={styles.content}>
         <div className={styles.section}>
           <h2>Harrastukset</h2>
@@ -33,6 +34,7 @@ const Home = () => {
           </p>
         </div>
       </section>
+
       <footer className={styles.footer}>
         <p>© 2024 Ville Majava</p>
       </footer>
