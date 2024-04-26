@@ -15,28 +15,35 @@ const Home = () => {
         </h1>
 
         <p>
-          Täältä löydät tietoa minun harrastuksistani, työstäni ja
-          asiantuntemuksestani.
+          {language === "fi"
+            ? "Täältä löydät tietoa minun harrastuksistani, työstäni ja asiantuntemuksestani."
+            : "Some information of my hobbies, work and expertise."}
         </p>
       </header>
 
       <section className={styles.content}>
         <div className={styles.section}>
-          <h2>Harrastukset</h2>
-          <p>Voimanosto, teknologia, luonto.</p>
-        </div>
-        <div className={styles.section}>
-          <h2>Työ</h2>
+          <h2>{language === "fi" ? "Harrastukset" : "Hobbies"}</h2>
           <p>
-            Olen korkeakouluopettaja, jolla on kokemusta radiotekniikasta,
-            elektroniikasta, web-kehityksestä ja mobiilisovelluksista.
+            {language === "fi"
+              ? "Voimanosto, teknologia, luonto"
+              : "Powerlifting, technology, nature"}
           </p>
         </div>
         <div className={styles.section}>
-          <h2>Asiantuntemus</h2>
+          <h2>{language === "fi" ? "Työ" : "Work"}</h2>
           <p>
-            Erityisosaamiseni kattaa radiotekniikan, antennisuunnittelun,
-            algoritmikehittämisen.
+            {language === "fi"
+              ? "Olen korkeakouluopettaja, jolla on kokemusta radiotekniikasta, elektroniikasta, web-kehityksestä ja mobiilisovelluksista."
+              : "I am a higher education teacher with experience in radio technology, electronics, web development and mobile applications."}
+          </p>
+        </div>
+        <div className={styles.section}>
+          <h2>{language === "fi" ? "Asiantuntemus" : "Expertise"}</h2>
+          <p>
+            {language === "fi"
+              ? "Erityisosaamiseni kattaa muun muassa radiotekniikan, antennisuunnittelun ja algoritmikehittämisen."
+              : "My expertise includes radio technology, antenna design and algorithm development."}
           </p>
         </div>
       </section>

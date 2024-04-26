@@ -20,8 +20,8 @@ function NavBa() {
             Home
           </Nav.Link>
 
-          <Nav.Link className={styles.navLinkCustom} href="/contact">
-            Contact
+          <Nav.Link className={styles.navLinkCustom} href="/courses">
+            Courses
           </Nav.Link>
           <Nav.Link className={styles.navLinkCustom} href="/blogs">
             Blog
