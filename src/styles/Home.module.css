@@ -4,6 +4,7 @@
   align-items: center;
   text-align: center;
   padding: 20px;
+
   color: #333;
 }
 
@@ -22,7 +23,8 @@
   text-align: center;
   padding-left: 10px;
   padding-right: 10px;
-  background-image: url("oma.jpg");
+  background-image: url("../assets/images/oma2_crop.jpg");
+
   background-size: cover;
   background-position: top;
   height: 100vh; /* tämä määrittelee korkeuden koko näytön korkuiseksi */
