@@ -5,7 +5,7 @@ const Context = createContext();
 export const useLanguage = () => useContext(Context);
 
 export const Provider = ({ children }) => {
-  const [language, setLanguage] = useState("en"); // Oletuskieli
+  const [language, setLanguage] = useState("fi"); // Oletuskieli
 
   const changeLanguage = (lang) => setLanguage(lang);
 

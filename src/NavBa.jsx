@@ -12,64 +12,47 @@ function NavBa() {
   const { changeLanguage } = useLanguage();
 
   return (
-    <Navbar className={styles.navbarCustom} bg="primary" expand="lg">
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
-      <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="ml-auto">
-          <Nav.Link className={styles.navLinkCustom} href="/">
-            Home
-          </Nav.Link>
+    <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
+      <Container>
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="ml-auto">
+            <Nav.Link className={styles.navLinkCustom} href="/">
+              Home
+            </Nav.Link>
 
-          <Nav.Link className={styles.navLinkCustom} href="/courses">
-            Courses
-          </Nav.Link>
-          <Nav.Link className={styles.navLinkCustom} href="/blogs">
-            Blog
-          </Nav.Link>
-          <Button
-            variant="outline-success"
-            onClick={() => changeLanguage("en")}
-          >
-            <img
-              src={enFlag}
-              alt="England"
-              style={{ width: 24, height: 16, marginRight: 5 }}
-            />
-            EN
-          </Button>
-          <Button
-            variant="outline-success"
-            onClick={() => changeLanguage("fi")}
-          >
-            <img
-              src={finlandFlag}
-              alt="Suomi"
-              style={{ width: 24, height: 16, marginRight: 5 }}
-            />
-            FI
-          </Button>
-        </Nav>
-      </Navbar.Collapse>
+            <Nav.Link className={styles.navLinkCustom} href="/courses">
+              Courses
+            </Nav.Link>
+            <Nav.Link className={styles.navLinkCustom} href="/blogs">
+              Blog
+            </Nav.Link>
+
+            <Button
+              variant="outline-success"
+              onClick={() => changeLanguage("en")}
+              style={{ padding: 0 }}
+            >
+              <img
+                src={enFlag}
+                alt="English flag"
+                style={{ padding: 0, width: 24, height: 16, display: "flex" }}
+              />
+            </Button>
+            <Button
+              variant="outline-success"
+              style={{ padding: 0 }}
+              onClick={() => changeLanguage("fi")}
+            >
+              <img
+                src={finlandFlag}
+                alt="Suomi"
+                style={{ width: 24, height: 16, padding: 0, display: "flex" }}
+              />
+            </Button>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
     </Navbar>
-    // <nav>
-    //   <ul>
-    //     <li>
-    //       <Link to="/">Home</Link>
-    //     </li>
-    //     <li>
-    //       <Link to="/blogs">Blogs</Link>
-    //     </li>{" "}
-    //     <li>
-    //       <Link to="/contact">Contact</Link>
-    //     </li>{" "}
-    //     <li>
-    //       <button onClick={() => changeLanguage("en")}>EN</button>
-    //     </li>{" "}
-    //     <li>
-    //       <button onClick={() => changeLanguage("fi")}>FI</button>
-    //     </li>{" "}
-    //   </ul>{" "}
-    // </nav>
   );
 }
 export default NavBa;
