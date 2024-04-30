@@ -1,10 +1,10 @@
 import React from "react";
-import { BrowserRouter, Route, Link } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import { Navbar, Nav, Button } from "react-bootstrap";
 import styles from "./styles/Home.module.css";
 import finlandFlag from "./assets/images/fin.jpg";
 import enFlag from "./assets/images/en.jpg";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 import { useLanguage } from "./Context";
 
@@ -13,7 +13,8 @@ function NavBa() {
 
   return (
     <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
-      <Container>
+      <Container fluid>
+        <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
             <Nav.Link className={styles.navLinkCustom} href="/">

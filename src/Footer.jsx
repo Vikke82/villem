@@ -9,14 +9,14 @@ import styles from "./styles/Home.module.css";
 
 const Footer = () => {
   return (
-    <footer className={styles.Footer}>
+    <footer className={styles.footer}>
       <a
         href="https://www.facebook.com/ville.majava.5/"
         className={styles.socialLink}
         target="_blank"
         rel="noopener noreferrer"
       >
-        <FontAwesomeIcon icon={faFacebookF} /> Facebook
+        <FontAwesomeIcon icon={faFacebookF} />
       </a>
       <a
         href="https://www.instagram.com/wilde_beaver/"
@@ -24,7 +24,7 @@ const Footer = () => {
         target="_blank"
         rel="noopener noreferrer"
       >
-        <FontAwesomeIcon icon={faInstagram} /> Instagram
+        <FontAwesomeIcon icon={faInstagram} />
       </a>
 
       <a
@@ -33,7 +33,7 @@ const Footer = () => {
         target="_blank"
         rel="noopener noreferrer"
       >
-        <FontAwesomeIcon icon={faLinkedin} /> Linkedin
+        <FontAwesomeIcon icon={faLinkedin} />
       </a>
 
       <a href="mailto:vikke.majava@gmail.com" className={styles.socialLink}>
