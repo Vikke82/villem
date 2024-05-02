@@ -107,7 +107,8 @@ button {
 }
 
 .markdownContainer {
-  padding-left: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 @media (min-width: 768px) {
