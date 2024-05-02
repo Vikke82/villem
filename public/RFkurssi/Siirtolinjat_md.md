@@ -1,3 +1,7 @@
+- [Määritelmä](#määritelmä)
+- [Aallon nopeus](#aallon-nopeus)
+- [Parikaapeli](#parikaapeli)
+
 Siirtolinja termiä käytetään johtimesta, jonka dimensiot (pituus) ovat lyhyet suhteessa johtimessa kulkevan vaihtosähkön aallonpituuteen. Tässä tilanteessa on otettava huomioon vaihtosähkön aaltoluonne. Aaltoluonteen vuoksi sähkövirran ja jännitteen amplitudit samalla ajanhetkellä ovat erilaiset eri kohdissa johdinta.
 
 <figure>
@@ -5,7 +9,7 @@ Siirtolinja termiä käytetään johtimesta, jonka dimensiot (pituus) ovat lyhye
   <figcaption>Kuva 1. Vaihtosähkön aaltoluonne kahden johtimen välillä. Mustat pisteet edustavat virtaa ja nuolet sähkökenttää.</figcaption>
 </figure>
 
-### Määritelmä käytännössä
+### Määritelmä
 
 Johdinta olisi ajateltava siirtolinjana kun siirtolinjan pituuden _d_ suhde vaihtosähkön aallonpituuteen &lambda;:
 d < x\*&lambda;, jossa x on suuruusluokkaa 10~20. Tässä tilanteessa signaalin aaltoluonne alkaa näkymään käytännössä. Toki määritelmä voi olla tiukempikin tarkkuutta vaativissa sovelluksissa.
@@ -19,7 +23,7 @@ $$
 
 missä \( v \) on aallon nopeus väliaineessa, \( f \) on aallon taajuus, ($\epsilon$) väliaineen permittiivisyys ja ($\mu$) väliaineen permeabiliteetti.
 
-### Induktiivisuuden ja kapasitanssin vaikutus aallon nopeuteen
+### Aallon nopeus
 
 Aallon nopeus \( v \) siirtolinjassa voidaan laskea kaavalla:
 

@@ -3,6 +3,7 @@ import ReactMarkdown from "react-markdown";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import rehypeRaw from "rehype-raw";
+import rehypeSlug from "rehype-slug";
 import "katex/dist/katex.min.css"; // Katex CSS
 import styles from "./styles/Home.module.css";
 
@@ -26,7 +27,7 @@ function MarkdownComponent({ path }) {
   return (
     <div className={styles.markdownContainer}>
       <ReactMarkdown
-        rehypePlugins={[rehypeRaw, rehypeKatex]}
+        rehypePlugins={[rehypeRaw, rehypeKatex, rehypeSlug]}
         remarkPlugins={[remarkMath]}
       >
         {markdown}
