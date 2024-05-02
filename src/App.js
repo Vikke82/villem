@@ -7,6 +7,7 @@ import Courses from "./pages/Courses";
 import NoPage from "./pages/NoPage";
 import Radiotekniikka from "./pages/RF/Radiotekniikka";
 import Siirtolinjat from "./pages/RF/Siirtolinjat";
+import Emaallot from "./pages/RF/Emaallot";
 import { Provider } from "./Context";
 
 export default function App() {
@@ -23,6 +24,7 @@ export default function App() {
             <Route path="courses" element={<Courses />} />{" "}
             <Route path="radiotekniikka" element={<Radiotekniikka />} />{" "}
             <Route path="siirtolinjat" element={<Siirtolinjat />} />{" "}
+            <Route path="emaallot" element={<Emaallot />} />{" "}
             <Route path="*" element={<NoPage />} />{" "}
           </Route>{" "}
         </Routes>{" "}
