@@ -4,6 +4,7 @@ import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import rehypeRaw from "rehype-raw";
 import "katex/dist/katex.min.css"; // Katex CSS
+import styles from "./styles/Home.module.css";
 
 function MarkdownComponent({ path }) {
   const [markdown, setMarkdown] = useState("");
@@ -23,12 +24,14 @@ function MarkdownComponent({ path }) {
   }, [path]); // Lisätty 'path' riippuvuuslistaan varmistamaan, että se lataa uudelleen jos polku muuttuu.
 
   return (
-    <ReactMarkdown
-      rehypePlugins={[rehypeRaw, rehypeKatex]}
-      remarkPlugins={[remarkMath]}
-    >
-      {markdown}
-    </ReactMarkdown>
+    <div className={styles.markdownContainer}>
+      <ReactMarkdown
+        rehypePlugins={[rehypeRaw, rehypeKatex]}
+        remarkPlugins={[remarkMath]}
+      >
+        {markdown}
+      </ReactMarkdown>
+    </div>
   );
 }
 
