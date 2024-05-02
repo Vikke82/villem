@@ -1,19 +1,35 @@
 import React, { useState, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
+import rehypeRaw from "rehype-raw";
+import "katex/dist/katex.min.css"; // Katex CSS
 
 function MarkdownComponent({ path }) {
   const [markdown, setMarkdown] = useState("");
 
   useEffect(() => {
-    fetch(path)
-      .then((response) => response.text())
-      .then((text) => setMarkdown(text))
-      .catch((error) =>
-        console.error("Error loading the markdown file:", error)
-      );
-  }, []); // Tyhjä riippuvuuslista, jotta koodi suoritetaan vain kerran komponentin mountauksen yhteydessä
+    const fetchMarkdown = async () => {
+      try {
+        const response = await fetch(path);
+        const text = await response.text();
+        setMarkdown(text);
+      } catch (error) {
+        console.error("Error loading the markdown file:", error);
+      }
+    };
 
-  return <ReactMarkdown>{markdown}</ReactMarkdown>;
+    fetchMarkdown();
+  }, [path]); // Lisätty 'path' riippuvuuslistaan varmistamaan, että se lataa uudelleen jos polku muuttuu.
+
+  return (
+    <ReactMarkdown
+      rehypePlugins={[rehypeRaw, rehypeKatex]}
+      remarkPlugins={[remarkMath]}
+    >
+      {markdown}
+    </ReactMarkdown>
+  );
 }
 
 export default MarkdownComponent;
