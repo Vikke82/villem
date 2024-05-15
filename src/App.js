@@ -8,7 +8,9 @@ import NoPage from "./pages/NoPage";
 import Radiotekniikka from "./pages/RF/Radiotekniikka";
 import Siirtolinjat from "./pages/RF/Siirtolinjat";
 import Emaallot from "./pages/RF/Emaallot";
+import Antennit from "./pages/RF/Antennit";
 import { Provider } from "./Context";
+import MarkdownComponent from "./MarkdownComponent";
 
 export default function App() {
   return (
@@ -25,6 +27,7 @@ export default function App() {
             <Route path="radiotekniikka" element={<Radiotekniikka />} />{" "}
             <Route path="siirtolinjat" element={<Siirtolinjat />} />{" "}
             <Route path="emaallot" element={<Emaallot />} />{" "}
+            <Route path="antennit" element={<Antennit />} />{" "}
             <Route path="*" element={<NoPage />} />{" "}
           </Route>{" "}
         </Routes>{" "}

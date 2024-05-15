@@ -43,3 +43,6 @@ $
 $
 
 Tämä kaava kertoo, kuinka sähkövirrat ja muuttuvat sähkökentät luovat magneettikenttiä. $\mu_0$ on tyhjiön permeabiliteetti.
+
+Näistä kaavoista voidaan päätellä, että muuttuva sähkökenttä luo muuttuvan magneettikentän ja muuttuva magneettikenttä luo muuttuvan sähkökentän. Sähkömagneettinen säteily on muuttuvien sähkökenttien ja magneettikenttien jatkuvaa "tanssia". Ja koska muuttuva virta johtimessa luo muuttuvan magneettikentän niin muuttuva virta siis luo muuttuvan sähkökentän. Ja toisnpäin: muuttuva sähkökenttä luo johtimeen muuttuvan virran. Tämä selittää [antennien](https://villemajava.com/Antennit)
+toimintaa.

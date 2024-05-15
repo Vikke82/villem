@@ -19,6 +19,11 @@ function Radiotekniikka() {
             {language === "fi" ? "EM-aallot" : "EM-waves"}
           </Link>
         </ListGroup.Item>
+        <ListGroup.Item>
+          <Link to="/Antennit">
+            {language === "fi" ? "Antennit" : "Antennas"}
+          </Link>
+        </ListGroup.Item>
       </ListGroup>
       <p></p>
     </div>
