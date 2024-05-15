@@ -1,5 +1,6 @@
 - [Määritelmä](#määritelmä)
 - [Aallon nopeus](#aallon-nopeus)
+- [Lennätinyhtälöt](#lennätinyhtälöt)
 - [Parikaapeli](#parikaapeli)
 
 Siirtolinja termiä käytetään johtimesta, jonka dimensiot (pituus) ovat lyhyet suhteessa johtimessa kulkevan vaihtosähkön aallonpituuteen. Tässä tilanteessa on otettava huomioon vaihtosähkön aaltoluonne. Aaltoluonteen vuoksi sähkövirran ja jännitteen amplitudit samalla ajanhetkellä ovat erilaiset eri kohdissa johdinta.
@@ -32,6 +33,57 @@ v = \frac{1}{\sqrt{LC}} = \frac{1}{\sqrt{\epsilon \mu}}
 $$
 
 Tämä yhtälö kertoo, miten siirtolinjan hajainduktanssi \( L \) ja hajakapasitanssi \( C \) vaikuttavat aallon nopeuteen. Voidaan siis ajatella, että mitä enemmän siirtolinjassa on kapasitanssia ja induktanssia, sen enemmän signaalilta vaatii aikaa "ladata ja purkaa" näitä reaktansseja.
+
+## Lennätinyhtälöt
+
+Lennätinyhtälöt ovat keskeisiä siirtolinjojen analysoinnissa radio- ja viestintätekniikassa. Ne kuvaavat, kuinka jännite ja virta muuttuvat siirtolinjan pituuden suhteen linjan omien ominaisuuksien, kuten induktanssin ja kapasitanssin, vuoksi. Lennätinyhtälöiden muodostamisessa ajatellaan, että siirtolinja jaetaan äärettömän lyhyisiin pätkiin ja yhtä pätkää voidaan kuvata passiivisten komponenttien avulla näin:
+
+<figure>
+  <img src="/RFkurssi/siirtolinja.png" alt="Siirtolinjan mallinnus" style="width: 90%;">
+  <figcaption>Kuva 2. Siirtolinjan äärettömän lyhyen pätkän piirimalli. </figcaption>
+</figure>
+
+## Lennätinyhtälöiden differentiaalimuodot
+
+Lennätinyhtälöt ilmaistaan tyypillisesti differentiaalimuodossa seuraavasti:
+
+### 1. Jänniteyhtälö
+
+Jännitteen muutos siirtolinjaa pitkin annetaan yhtälöllä:
+
+$$
+ \frac{\partial V}{\partial x} = -L \frac{\partial I}{\partial t} - R I
+$$
+
+missä:
+
+- \( V \) on jännite,
+- \( I \) on virta,
+- \( x \) on paikka linjalla,
+- \( t \) on aika,
+- \( L \) on induktanssi yksikköpituutta kohden,
+- \( R \) on resistanssi yksikköpituutta kohden.
+
+### 2. Virtayhtälö
+
+Virran muutos siirtolinjaa pitkin annetaan yhtälöllä:
+
+$$
+ \frac{\partial I}{\partial x} = -C \frac{\partial V}{\partial t} - G V
+$$
+
+missä:
+
+- \( C \) on kapasitanssi yksikköpituutta kohden,
+- \( G \) on konduktanssi yksikköpituutta kohden.
+
+## Sovellukset ja merkitys
+
+Nämä yhtälöt selittävät sähkömagneettisten aaltojen etenemisen siirtolinjoilla ja niitä käytetään määrittämään tärkeitä ominaisuuksia, kuten impedanssi, heijastus- ja siirtokertoimet.
+
+Ratkaisemalla nämä yhtälöt asianmukaisilla reunaehtoilla voidaan analysoida aaltojen käyttäytymistä erilaisissa tilanteissa.
+
+Käytännön työssä näitä harvoin kuitenkin tarvitsee vaan voidaan käyttää yksinkertaistettuja työkaluja kuten sirontaparametreja ([S-parametrit](https://villemajava.com/Sparametrit))
 
 ### Erilaisia siirtolinjatyyppejä
 
