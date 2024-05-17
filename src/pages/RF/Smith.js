@@ -6,20 +6,36 @@ import InputGroup from "react-bootstrap/InputGroup";
 
 function Smith() {
   const [inputImpedance, setInputImpedance] = useState({
-    real: 50,
-    imag: 0,
-    ref: 50,
+    real: 50.0,
+    imag: 0.0,
+    ref: 50.0,
   });
-  const [impedance, setImpedance] = useState({ real: 1, imag: 0, ref: 50 });
+  const [impedance, setImpedance] = useState({
+    real: 1.0,
+    imag: 0.0,
+    ref: 50.0,
+  });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    const inputValue = parseFloat(value);
+
+    // Tarkista, että syöte ei ole tyhjä merkkijono
+    if (value.trim() === "") {
+      // Aseta arvo nollaksi ja päivitä tila
+      setInputImpedance({ ...inputImpedance, [name]: 0 });
+    }
+    let inputValue = parseFloat(value);
+
+    // Tarkista, onko syötetty merkkijono negatiivinen luku
+    if (value.startsWith("-") && value.length > 1) {
+      const numericValue = parseFloat(value.slice(1));
+      inputValue = isNaN(numericValue) ? 0 : -numericValue;
+    }
 
     // Tarkista, että syöte on pätevä liukuluku
-    if (isNaN(inputValue)) {
-      return; // Jos syöte ei ole pätevä liukuluku, älä tee mitään
-    }
+    // if (isNaN(inputValue)) {
+    //   return; // Jos syöte ei ole pätevä liukuluku, älä tee mitään
+    // }
 
     let updatedImpedance;
 
@@ -72,7 +88,7 @@ function Smith() {
       <h1>Interaktiivinen Smithin diagrammi</h1>
       <SmithChart impedance={impedance} />
       <InputGroup size="sm" className="mb-3">
-        <h5>Impedanssi</h5>
+        <h5>Kuorman impedanssi: </h5>
         <InputGroup.Text id="inputGroup-sizing-sm">Reaali</InputGroup.Text>
 
         <Form.Control
