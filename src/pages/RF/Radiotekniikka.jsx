@@ -29,6 +29,11 @@ function Radiotekniikka() {
             {language === "fi" ? "S-parametrit" : "S-parameters"}
           </Link>
         </ListGroup.Item>
+        <ListGroup.Item>
+          <Link to="/Smith">
+            {language === "fi" ? "Smithin diagrammi" : "Smith diagram"}
+          </Link>
+        </ListGroup.Item>
       </ListGroup>
       <p></p>
     </div>

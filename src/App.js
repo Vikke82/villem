@@ -12,6 +12,7 @@ import Antennit from "./pages/RF/Antennit";
 import { Provider } from "./Context";
 import MarkdownComponent from "./MarkdownComponent";
 import Sparametrit from "./pages/RF/Sparametrit";
+import Smith from "./pages/RF/Smith";
 
 export default function App() {
   return (
@@ -30,6 +31,7 @@ export default function App() {
             <Route path="emaallot" element={<Emaallot />} />{" "}
             <Route path="antennit" element={<Antennit />} />{" "}
             <Route path="sparametrit" element={<Sparametrit />} />{" "}
+            <Route path="smith" element={<Smith />} />{" "}
             <Route path="*" element={<NoPage />} />{" "}
           </Route>{" "}
         </Routes>{" "}
