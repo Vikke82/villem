@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import SmithChart from "../../SmithChart";
 import { parse } from "@fortawesome/fontawesome-svg-core";
+import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
 
 function Smith() {
   const [inputImpedance, setInputImpedance] = useState({
@@ -69,27 +71,41 @@ function Smith() {
     <div className="App">
       <h1>Interaktiivinen Smithin diagrammi</h1>
       <SmithChart impedance={impedance} />
-      <input
-        type="number"
-        name="real"
-        value={inputImpedance.real}
-        onChange={handleInputChange}
-        placeholder="Reaaliosa"
-      />
-      <input
-        type="number"
-        name="imag"
-        value={inputImpedance.imag}
-        onChange={handleInputChange}
-        placeholder="Imaginaariosa"
-      />
-      <input
-        type="number"
-        name="ref"
-        value={inputImpedance.ref}
-        onChange={handleInputChange}
-        placeholder="Referenssiimpedanssi"
-      />
+      <InputGroup size="sm" className="mb-3">
+        <h5>Impedanssi</h5>
+        <InputGroup.Text id="inputGroup-sizing-sm">Reaali</InputGroup.Text>
+
+        <Form.Control
+          aria-label="Small"
+          aria-describedby="inputGroup-sizing-sm"
+          type="number"
+          name="real"
+          value={inputImpedance.real}
+          onChange={handleInputChange}
+        />
+        <InputGroup.Text id="inputGroup-sizing-sm">Imaginaari</InputGroup.Text>
+
+        <Form.Control
+          aria-label="Small"
+          aria-describedby="inputGroup-sizing-sm"
+          type="number"
+          name="imag"
+          value={inputImpedance.imag}
+          onChange={handleInputChange}
+        />
+
+        <InputGroup.Text id="inputGroup-sizing-sm">
+          Referenssi-impedanssi
+        </InputGroup.Text>
+        <Form.Control
+          aria-label="Small"
+          aria-describedby="inputGroup-sizing-sm"
+          type="number"
+          name="ref"
+          value={inputImpedance.ref}
+          onChange={handleInputChange}
+        />
+      </InputGroup>
     </div>
   );
 }
