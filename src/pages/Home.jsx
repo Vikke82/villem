@@ -34,16 +34,16 @@ const Home = () => {
           <h2>{language === "fi" ? "Työ" : "Work"}</h2>
           <p>
             {language === "fi"
-              ? "Olen korkeakouluopettaja, jolla on kokemusta radiotekniikasta, elektroniikasta, web-kehityksestä ja mobiilisovelluksista."
-              : "I am a higher education teacher with experience in radio technology, electronics, web development and mobile applications."}
+              ? "Olen korkeakouluopettaja, jolla on kokemusta muun muassa radiotekniikasta, elektroniikasta, algoritmi- ja web-kehityksestä ja mobiilisovelluksista. Olen toiminut myös freelance-yrittäjänä useamman vuoden"
+              : "I am a higher education teacher with experience including radio technology, electronics, algorithm- and web-development and mobile applications. I have also worked as a freelance entrepreneur for several years."}
           </p>
         </div>
         <div className={styles.section}>
           <h2>{language === "fi" ? "Asiantuntemus" : "Expertise"}</h2>
           <p>
             {language === "fi"
-              ? "Erityisosaamiseni kattaa muun muassa radiotekniikan, antennisuunnittelun ja algoritmikehittämisen."
-              : "My expertise includes radio technology, antenna design and algorithm development."}
+              ? "Erityisosaamiseni kattaa muun muassa radiotekniikan, antennisuunnittelun ja algoritmikehittämisen. Tällä hetkellä minulla on 110+ raportoitua keksintöä, joista 30+ on patentoitu tai patentointiprosessissa."
+              : "My expertise includes radio technology, antenna design and algorithm development. Currently 110+ inventions reported where 30+ are patented or proceeding in patenting process"}
           </p>
         </div>
       </section>
