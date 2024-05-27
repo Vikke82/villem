@@ -10,14 +10,14 @@ const Home = () => {
       <header className={styles.header}>
         <h1>
           {language === "fi"
-            ? "Tervetuloa kotisivulle"
-            : "Welcome to the Home Page"}
+            ? "Tervetuloa kotisivulleni"
+            : "Welcome to my Home Page"}
         </h1>
 
         <p>
           {language === "fi"
-            ? "Täältä löydät tietoa minun harrastuksistani, työstäni ja asiantuntemuksestani."
-            : "Some information of my hobbies, work and expertise."}
+            ? "Täällä hieman minusta ja muutakin tietoa."
+            : "Something about me and some other info."}
         </p>
       </header>
 
