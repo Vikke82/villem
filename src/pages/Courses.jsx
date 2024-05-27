@@ -20,6 +20,13 @@ function Courses() {
           </Link>
         </ListGroup.Item>
       </ListGroup>
+      <ListGroup>
+        <ListGroup.Item>
+          <Link to="/Silmukat">
+            {language === "fi" ? "Silmukat" : "Loops"}
+          </Link>
+        </ListGroup.Item>
+      </ListGroup>
       <p></p>
     </div>
   );
