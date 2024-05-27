@@ -4,6 +4,7 @@ import { useState } from "react";
 
 const Silmukat = () => {
   const [open, setOpen] = useState(false);
+  const [open2, setOpen2] = useState(false);
   return (
     <Container>
       <h1 className="mt-5">Silmukat C-kielessä</h1>
@@ -134,7 +135,7 @@ do {
         ehkäistä ikuisten silmukoiden syntymistä.
       </p>
       <p>
-        Harjoitus: Kirjoita ohjelma, joka tulostaa kuukausien numerot{" "}
+        Harjoitus 1: Kirjoita ohjelma, joka tulostaa kuukausien numerot{" "}
         <code>for</code> -silmukalla.
       </p>
 
@@ -150,25 +151,69 @@ do {
         <div id="example-collapse-text">
           <Card className="mt-4">
             <Card.Header>
-              <h4>while-silmukka</h4>
+              <h4>for-silmukka</h4>
             </Card.Header>
             <Card.Body>
               <Card.Text>
-                <p>
-                  <code>while</code> silmukka toistaa koodilohkon niin kauan
-                  kuin ehto on tosi.
-                </p>
+                <p>Yksi ratkaisu voisi olla seuraava:</p>
                 <pre>
-                  <code>{`int i = 0;
-while (i < 13) {
-    printf("i on %d\\n", i);
-    i++;
+                  <code>{`for (int i = 0; i < 13; i++) {
+    printf("Kuukausi %d\\n", i);
 }`}</code>
                 </pre>
                 <p>
                   Tässä esimerkissä muuttuja <code>i</code> alustetaan arvoon 0
                   ja kasvaa yhdellä jokaisen iteraation jälkeen, kunnes se
                   saavuttaa arvon 12.
+                </p>
+              </Card.Text>
+            </Card.Body>
+          </Card>
+        </div>
+      </Collapse>
+      <div className="mt-5"></div>
+      <p className="mb-4">
+        Silmukoita voidaan käyttää sisäkkäin, jolloin voimme käsitellä vaikkapa
+        taulukon, matriisin data-alkioita tai vaikka kuvan pikseleitä.
+      </p>
+
+      <p>
+        Harjoitus 2: Kirjoita ohjelma, joka tulostaa matriisin{" "}
+        <code>{`int matrix[2][3] = { {1, 2, 3}, {5, 6, 7} };`}</code> arvot{" "}
+        <code>for</code> -silmukalla.
+      </p>
+
+      <Button
+        onClick={() => setOpen2(!open2)}
+        aria-controls="example-collapse-text"
+        aria-expanded={open2}
+        variant="primary"
+      >
+        Näytä/piilota esimerkkiratkaisu
+      </Button>
+      <Collapse in={open2}>
+        <div id="example-collapse-text">
+          <Card className="mt-4">
+            <Card.Header>
+              <h4>for-silmukat matriisin arvojen tulostukseen</h4>
+            </Card.Header>
+            <Card.Body>
+              <Card.Text>
+                <p>Yksi ratkaisu voisi olla seuraava:</p>
+                <pre>
+                  <code>{`int matrix[2][3] = { {1, 2, 3}, {5, 6, 7} };
+
+int i, j;
+for (i = 0; i < 2; i++) {
+  for (j = 0; j < 3; j++) {
+    printf("%d", matrix[i][j]);
+  }
+}`}</code>
+                </pre>
+                <p>
+                  Tässä esimerkissä muuttuja <code>i</code> iteroi matriisin
+                  rivinumerot ja <code>j</code> sarakenumerot. Tämä tulostaa
+                  kaikki matriisin arvot.
                 </p>
               </Card.Text>
             </Card.Body>
