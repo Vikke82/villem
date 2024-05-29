@@ -14,6 +14,7 @@ import MarkdownComponent from "./MarkdownComponent";
 import Sparametrit from "./pages/RF/Sparametrit";
 import Smith from "./pages/RF/Smith";
 import Silmukat from "./pages/Ohjelmointi/Silmukat";
+import Ckieli from "./pages/Ohjelmointi/Ckieli";
 
 export default function App() {
   return (
@@ -33,6 +34,7 @@ export default function App() {
             <Route path="antennit" element={<Antennit />} />{" "}
             <Route path="sparametrit" element={<Sparametrit />} />{" "}
             <Route path="smith" element={<Smith />} />{" "}
+            <Route path="ckieli" element={<Ckieli />} />{" "}
             <Route path="silmukat" element={<Silmukat />} />{" "}
             <Route path="*" element={<NoPage />} />{" "}
           </Route>{" "}

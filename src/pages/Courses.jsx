@@ -22,8 +22,8 @@ function Courses() {
       </ListGroup>
       <ListGroup>
         <ListGroup.Item>
-          <Link to="/Silmukat">
-            {language === "fi" ? "Silmukat" : "Loops"}
+          <Link to="/Ckieli">
+            {language === "fi" ? "C-kieli" : "C-language"}
           </Link>
         </ListGroup.Item>
       </ListGroup>
