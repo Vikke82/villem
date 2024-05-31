@@ -14,6 +14,7 @@ function Sparametrit() {
       <h4>Esimerkki erään vahvistimen s-parametreista</h4>
       <ScrollableText path="/RFkurssi/bgu6005.txt" />
       <p></p>
+      <h4>Touchstone</h4>
       <p>
         Tämän tiedoston formaatti on niin sanottu{" "}
         <a href="https://docs.keysight.com/display/genesys2010/Touchstone+Format">
@@ -24,7 +25,10 @@ function Sparametrit() {
         "S", "MA", "R" ja "50". Tämä tarkoittaa, että taajuus on megahertseissä,
         arvot ovat S-parametreja, impedanssi on 50 ohmia ja arvot ovat
         reaalisia. "mag" viittaa magnitudiin eli vahvistukseen ja "arg" viittaa
-        vaiheeseen asteina.
+        vaiheeseen asteina. Yksiköt voivat olla esimerkiksi myös "DB" ja "DEG".
+        Laskennassa on otettava käytettävät yksiköt huomioon.
+        Simulaatio-ohjelmistot yleensä osaavat tulkita Touchstone-tiedoston
+        oikein, jolloin käytetyt yksiköt huomioidaan automaattisesti.
       </p>
 
       <Card>
