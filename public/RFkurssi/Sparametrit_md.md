@@ -16,8 +16,8 @@ S-parametrit, eli sirontaparametrit, kuvaavat miten sähkömagneettiset aallot e
 
 1. **Eteneviin ja heijastuviin aaltoihin perustuvat suureet:**
 
-   - $ a*i $ on etenevä aalto portissa \_i*.
-   - $ b*i $ on heijastuva aalto portissa \_i*.
+   - a<sub>_i_</sub> on etenevä aalto portissa _i_.
+   - b<sub>_i_</sub> on heijastuva aalto portissa _i_.
 
 2. **S-parametrien määritelmät:**
    - S<sub>ij</sub> kuvaa heijastuvan aallon portissa _i_ ja etenevän aallon portissa _j_ välistä suhdetta, kun kaikki muut portit ovat sovitetut (eli niihin ei kohdistu heijastuksia).
@@ -95,6 +95,10 @@ Missä:
 - **Kompleksiset arvot**: S-parametrit ovat yleensä kompleksisia lukuja, jotka sisältävät sekä amplituditiedon että vaihekulman.
 
 - **Magnitudi ja vaihe**: S-parametrien kompleksinen esitys voidaan esittää magnitudin ja vaiheen avulla. Esimerkiksi, S<sub>21</sub> = |S<sub>21</sub>|$ e^{j\theta} $, missä |S<sub>21</sub>| on signaalin magnitudi ja $ \theta $ on vaihekulma.
+
+- **Taajuusriippuvuus**: S-parametrit riippuvat taajuudesta, joten ne ilmoitetaan aina tiettyä taajuutta kohden, katso esimerkki alla.
+
+- **Olosuhderiippuvuus**: S-parametrit voivat riippua myös aktiivipiirin biasoinnista. Esimerkiksi vahvistintransistorin S-parametrit riippuvat transistorin kollektori-jännitteestä ja virrasta, katso esimerkki alla. S-parametreilla on usein myös lämpötilariippuvuus.
 
 ### Sovellukset
 

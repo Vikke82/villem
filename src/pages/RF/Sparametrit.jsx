@@ -6,6 +6,7 @@ import { useState } from "react";
 
 function Sparametrit() {
   const [open, setOpen] = useState(false);
+  const [open2, setOpen2] = useState(false);
   return (
     <div>
       <h1>Sparametrit</h1>
@@ -57,6 +58,44 @@ function Sparametrit() {
                   tarkoitettu GPS/Glonass sovelluksiin. Tähän viittaa myös
                   tiedoston lopussa olevat kohinakertoimet, käsittelemme näitä
                   eri osiossa.
+                </p>
+              </Card.Text>
+            </Card.Body>
+          </Card>
+        </div>
+      </Collapse>
+      <Card>
+        <Card.Body>
+          <strong>Harjoitus 2:</strong> S-parametrit ovat käteviä
+          suuritaajuisten signaalien kanssa. Mieti miksi niitä ei käytetä
+          matalilla taajuuksilla vaikkapa audiotekniikassa?
+        </Card.Body>
+      </Card>
+      <Button
+        onClick={() => setOpen2(!open2)}
+        aria-controls="example-collapse-text"
+        aria-expanded={open2}
+        variant="primary"
+      >
+        Näytä/piilota esimerkkiratkaisu
+      </Button>
+      <Collapse in={open2}>
+        <div id="example-collapse-text">
+          <Card className="mt-4">
+            <Card.Header>
+              <h4>Pohdintaa</h4>
+            </Card.Header>
+            <Card.Body>
+              <Card.Text>
+                <p>
+                  S-parametrit määritellään etenevän ja heijastuvan aallon
+                  suhteina. Matalilla taajuuksilla aallonpituus on hyvin suuri
+                  verrattuna laitteiden ja siirtolinjojen dimensioihin. Tällöin
+                  heijastuvien aaltojen energia on hyvin pieni ja vaihe-erojen
+                  määritys olisi hankalaa, jolloin niitä ei voida mitata
+                  tarkasti. Tällöin käytetään perinteisempiä
+                  piirianalyysimenetelmiä kuten impedanssien ja
+                  siirtofunktioiden laskentaa.
                 </p>
               </Card.Text>
             </Card.Body>
