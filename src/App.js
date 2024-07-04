@@ -15,6 +15,7 @@ import Sparametrit from "./pages/RF/Sparametrit";
 import Smith from "./pages/RF/Smith";
 import Silmukat from "./pages/Ohjelmointi/Silmukat";
 import Ckieli from "./pages/Ohjelmointi/Ckieli";
+import BlogPage from "./BlogPage";
 
 export default function App() {
   return (
@@ -36,6 +37,9 @@ export default function App() {
             <Route path="smith" element={<Smith />} />{" "}
             <Route path="ckieli" element={<Ckieli />} />{" "}
             <Route path="silmukat" element={<Silmukat />} />{" "}
+            <Route path="blogs" element={<Blogs />}>
+              <Route path=":name" element={<BlogPage />} />
+            </Route>
             <Route path="*" element={<NoPage />} />{" "}
           </Route>{" "}
         </Routes>{" "}
