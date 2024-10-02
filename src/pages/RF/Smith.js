@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SmithChart from "../../SmithChart";
-import { parse } from "@fortawesome/fontawesome-svg-core";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
+import Complex from "complex.js";
 
 function Smith() {
   const [inputImpedance, setInputImpedance] = useState({
@@ -10,118 +10,232 @@ function Smith() {
     imag: 0.0,
     ref: 50.0,
   });
-  const [impedance, setImpedance] = useState({
+
+  const [originalImpedance, setOriginalImpedance] = useState({
     real: 1.0,
     imag: 0.0,
     ref: 50.0,
   });
 
+  const [totalImpedance, setTotalImpedance] = useState({
+    real: 1.0,
+    imag: 0.0,
+    ref: 50.0,
+  });
+
+  const [frequency, setFrequency] = useState(1e9); // Default to 1 GHz
+
+  const [components, setComponents] = useState([]);
+  const [componentType, setComponentType] = useState("capacitor");
+  const [componentValue, setComponentValue] = useState("");
+
+  // Handle changes in input impedance fields
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    const inputValue = parseFloat(value);
 
-    // Tarkista, että syöte ei ole tyhjä merkkijono
-    if (value.trim() === "") {
-      // Aseta arvo nollaksi ja päivitä tila
-      setInputImpedance({ ...inputImpedance, [name]: 0 });
-    }
-    let inputValue = parseFloat(value);
-
-    // Tarkista, onko syötetty merkkijono negatiivinen luku
-    if (value.startsWith("-") && value.length > 1) {
-      const numericValue = parseFloat(value.slice(1));
-      inputValue = isNaN(numericValue) ? 0 : -numericValue;
-    }
-
-    // Tarkista, että syöte on pätevä liukuluku
-    // if (isNaN(inputValue)) {
-    //   return; // Jos syöte ei ole pätevä liukuluku, älä tee mitään
-    // }
-
-    let updatedImpedance;
-
-    if (name === "real") {
-      // Jos muokattava kenttä on reaaliosa
-      const real = inputValue;
-      const imag = inputImpedance.imag;
-      const referenceImpedance = parseFloat(inputImpedance.ref);
-
-      // Normalisoi arvot
-      const normalizedReal = real / referenceImpedance;
-
-      updatedImpedance = {
-        ...impedance,
-        real: normalizedReal,
-      };
-    } else if (name === "imag") {
-      // Jos muokattava kenttä on imaginaariosa
-      const real = inputImpedance.real;
-      const imag = inputValue;
-      const referenceImpedance = parseFloat(inputImpedance.ref);
-
-      // Normalisoi arvot
-      const normalizedImag = imag / referenceImpedance;
-
-      updatedImpedance = {
-        ...impedance,
-        imag: normalizedImag,
-      };
-    } else if (name === "ref") {
-      // Jos muokattava kenttä on referenssiimpedanssi
-      const normalizedRef = inputValue;
-      const real = inputImpedance.real / inputValue;
-      const imag = inputImpedance.imag / inputValue;
-
-      updatedImpedance = {
-        ...impedance,
-        real: real,
-        imag: imag,
-        ref: normalizedRef,
-      };
-    }
-
-    setInputImpedance({ ...inputImpedance, [name]: inputValue });
-    setImpedance(updatedImpedance);
+    setInputImpedance((prev) => ({ ...prev, [name]: inputValue }));
   };
+
+  // Function to add a new matching component (e.g., capacitor or inductor)
+  const addComponent = (e) => {
+    e.preventDefault();
+    setComponents([
+      ...components,
+      { type: componentType, value: parseFloat(componentValue) },
+    ]);
+    setComponentValue("");
+  };
+
+  // Calculate the total impedance considering original impedance and all matching components
+  const calculateTotalImpedance = (baseImpedance, components, frequency) => {
+    // Initialize total impedance as a complex number
+    let totalImpedance = new Complex(baseImpedance.real, baseImpedance.imag);
+
+    components.forEach((component) => {
+      switch (component.type) {
+        case "capacitor":
+          // Series capacitor: Z = -j / (ωC)
+          const capacitiveReactance = new Complex(
+            0,
+            -1 /
+              (2 * Math.PI * frequency * component.value) /
+              inputImpedance.ref
+          );
+          // Add series impedance directly
+          totalImpedance = totalImpedance.add(capacitiveReactance);
+          break;
+
+        case "inductor":
+          // Series inductor: Z = jωL
+          const inductiveReactance = new Complex(
+            0,
+            (2 * Math.PI * frequency * component.value) / inputImpedance.ref
+          );
+          // Add series impedance directly
+          totalImpedance = totalImpedance.add(inductiveReactance);
+          break;
+
+        case "paracapacitor":
+          // Parallel capacitor: Y = jωC (Admittance form)
+          const capacitorAdmittance = new Complex(
+            0,
+            (2 * Math.PI * frequency * component.value) / inputImpedance.ref
+          );
+          // Convert total impedance to admittance (Y = 1/Z)
+          const totalAdmittance = totalImpedance.inverse();
+          // Add admittances
+          const newAdmittance = totalAdmittance.add(capacitorAdmittance);
+          // Convert back to impedance (Z = 1/Y)
+          totalImpedance = newAdmittance.inverse();
+          break;
+
+        case "parainductor":
+          // Parallel inductor: Y = -j / (ωL) (Admittance form)
+          const inductorAdmittance = new Complex(
+            0,
+            -1 /
+              (2 * Math.PI * frequency * component.value) /
+              inputImpedance.ref
+          );
+          // Convert total impedance to admittance (Y = 1/Z)
+          const totalAdmittanceInductor = totalImpedance.inverse();
+          // Add admittances
+          const newAdmittanceInductor =
+            totalAdmittanceInductor.add(inductorAdmittance);
+          // Convert back to impedance (Z = 1/Y)
+          totalImpedance = newAdmittanceInductor.inverse();
+          break;
+
+        default:
+          break;
+      }
+    });
+
+    // Return total impedance in real and imaginary components
+    return {
+      real: totalImpedance.re,
+      imag: totalImpedance.im,
+      ref: baseImpedance.ref,
+    };
+  };
+
+  // Update original impedance when input impedance changes
+  useEffect(() => {
+    const normalizedReal = inputImpedance.real / inputImpedance.ref;
+    const normalizedImag = inputImpedance.imag / inputImpedance.ref;
+
+    setOriginalImpedance({
+      real: normalizedReal,
+      imag: normalizedImag,
+      ref: inputImpedance.ref,
+    });
+  }, [inputImpedance]);
+
+  // Update total impedance whenever original impedance or components change
+  useEffect(() => {
+    const updatedTotalImpedance = calculateTotalImpedance(
+      originalImpedance,
+      components,
+      frequency
+    );
+    setTotalImpedance(updatedTotalImpedance);
+  }, [originalImpedance, components]);
+
+  useEffect(() => {
+    const updatedTotalImpedance = calculateTotalImpedance(
+      originalImpedance,
+      components,
+      frequency
+    );
+    setTotalImpedance(updatedTotalImpedance);
+  }, [originalImpedance, components, frequency]);
 
   return (
     <div className="App">
       <h1>Interaktiivinen Smithin diagrammi</h1>
-      <SmithChart impedance={impedance} />
+      <SmithChart
+        impedance={[
+          {
+            real: originalImpedance.real,
+            imag: originalImpedance.imag,
+            label: "Alkuperäinen",
+          },
+          {
+            real: totalImpedance.real,
+            imag: totalImpedance.imag,
+            label: "Sovitettu",
+          },
+        ]}
+      />
       <InputGroup size="sm" className="mb-3">
         <h5>Kuorman impedanssi: </h5>
-        <InputGroup.Text id="inputGroup-sizing-sm">Reaali</InputGroup.Text>
-
+        <InputGroup.Text>Reaali</InputGroup.Text>
         <Form.Control
-          aria-label="Small"
-          aria-describedby="inputGroup-sizing-sm"
           type="number"
           name="real"
           value={inputImpedance.real}
           onChange={handleInputChange}
         />
-        <InputGroup.Text id="inputGroup-sizing-sm">Imaginaari</InputGroup.Text>
-
+        <InputGroup.Text>Imaginaari</InputGroup.Text>
         <Form.Control
-          aria-label="Small"
-          aria-describedby="inputGroup-sizing-sm"
           type="number"
           name="imag"
           value={inputImpedance.imag}
           onChange={handleInputChange}
         />
-
-        <InputGroup.Text id="inputGroup-sizing-sm">
-          Referenssi-impedanssi
-        </InputGroup.Text>
+        <InputGroup.Text>Referenssi-impedanssi</InputGroup.Text>
         <Form.Control
-          aria-label="Small"
-          aria-describedby="inputGroup-sizing-sm"
           type="number"
           name="ref"
           value={inputImpedance.ref}
           onChange={handleInputChange}
         />
+        <InputGroup.Text>Taajuus</InputGroup.Text>
+        <Form.Control
+          type="number"
+          name="frequency"
+          value={frequency}
+          onChange={(e) => setFrequency(parseFloat(e.target.value))}
+        />
       </InputGroup>
+
+      <form onSubmit={addComponent}>
+        <InputGroup size="sm" className="mb-3">
+          <InputGroup.Text>Lisää komponentti</InputGroup.Text>
+          <Form.Select
+            onChange={(e) => setComponentType(e.target.value)}
+            value={componentType}
+          >
+            <option value="capacitor">Sarjakondensaattori</option>
+            <option value="inductor">Sarjainduktanssi</option>
+            <option value="paracapacitor">Rinnankondensaattori</option>
+            <option value="parainductor">Rinnaninduktanssi</option>
+          </Form.Select>
+          <Form.Control
+            type="number"
+            placeholder="Arvo"
+            onChange={(e) => setComponentValue(e.target.value)}
+            value={componentValue}
+          />
+          <button type="submit">Lisää</button>
+        </InputGroup>
+      </form>
+
+      <ul>
+        {components.map((component, index) => (
+          <li key={index}>
+            {component.type}: {component.value}
+            <button
+              onClick={() =>
+                setComponents(components.filter((_, i) => i !== index))
+              }
+            >
+              Poista
+            </button>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
