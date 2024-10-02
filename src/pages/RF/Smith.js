@@ -23,7 +23,10 @@ function Smith() {
     ref: 50.0,
   });
 
-  const [frequency, setFrequency] = useState(1e9); // Default to 1 GHz
+  // Store frequency as a string to allow for direct user input with decimals
+  const [frequencyMHz, setFrequencyMHz] = useState("1000.0");
+  // Convert frequency in MHz to Hz for calculations
+  let frequency = parseFloat(frequencyMHz) * 1e6;
 
   const [components, setComponents] = useState([]);
   const [componentType, setComponentType] = useState("capacitor");
@@ -51,6 +54,7 @@ function Smith() {
   const calculateTotalImpedance = (baseImpedance, components, frequency) => {
     // Initialize total impedance as a complex number
     let totalImpedance = new Complex(baseImpedance.real, baseImpedance.imag);
+    console.log(frequency);
 
     components.forEach((component) => {
       switch (component.type) {
@@ -77,39 +81,43 @@ function Smith() {
           break;
 
         case "paracapacitor":
-          // Parallel capacitor: Y = jωC (Admittance form)
-          const capacitorAdmittance = new Complex(
-            0,
-            (2 * Math.PI * frequency * component.value) / inputImpedance.ref
-          );
-          // Convert total impedance to admittance (Y = 1/Z)
-          const totalAdmittance = totalImpedance.inverse();
-          // Add admittances
-          const newAdmittance = totalAdmittance.add(capacitorAdmittance);
-          // Convert back to impedance (Z = 1/Y)
-          totalImpedance = newAdmittance.inverse();
-          break;
-
-        case "parainductor":
-          // Parallel inductor: Y = -j / (ωL) (Admittance form)
-          const inductorAdmittance = new Complex(
+          const paracapacitiveReactance = new Complex(
             0,
             -1 /
               (2 * Math.PI * frequency * component.value) /
               inputImpedance.ref
           );
-          // Convert total impedance to admittance (Y = 1/Z)
-          const totalAdmittanceInductor = totalImpedance.inverse();
-          // Add admittances
-          const newAdmittanceInductor =
-            totalAdmittanceInductor.add(inductorAdmittance);
-          // Convert back to impedance (Z = 1/Y)
-          totalImpedance = newAdmittanceInductor.inverse();
+
+          console.log(
+            "Total Impedance before inversion:",
+            totalImpedance.toString()
+          );
+
+          totalImpedance =
+            (paracapacitiveReactance * totalImpedance) /
+            (paracapacitiveReactance + totalImpedance);
+
+          break;
+
+        case "parainductor":
+          // Parallel inductor: Y = -j / (ωL) (Admittance form)
+          const parainductorReactance = new Complex(
+            0,
+            (2 * Math.PI * frequency * component.value) / inputImpedance.ref
+          );
+          totalImpedance =
+            (parainductorReactance * totalImpedance) /
+            (parainductorReactance + totalImpedance);
           break;
 
         default:
           break;
       }
+
+      console.log("Frequency:", frequency);
+      console.log("Total Impedance before:", totalImpedance);
+      console.log("Component:", component.type, component.value);
+      console.log("Total Impedance after:", totalImpedance);
     });
 
     // Return total impedance in real and imaginary components
@@ -132,23 +140,25 @@ function Smith() {
     });
   }, [inputImpedance]);
 
+  // Handle frequency change to allow decimals
+  const handleFrequencyChange = (e) => {
+    setFrequencyMHz(e.target.value); // Directly set string value
+  };
+
   // Update total impedance whenever original impedance or components change
   useEffect(() => {
-    const updatedTotalImpedance = calculateTotalImpedance(
-      originalImpedance,
-      components,
-      frequency
-    );
-    setTotalImpedance(updatedTotalImpedance);
-  }, [originalImpedance, components]);
+    frequency = parseFloat(frequencyMHz) * 1e6;
 
-  useEffect(() => {
-    const updatedTotalImpedance = calculateTotalImpedance(
-      originalImpedance,
-      components,
-      frequency
-    );
-    setTotalImpedance(updatedTotalImpedance);
+    if (!isNaN(frequency)) {
+      // Ensure frequency is valid
+      const updatedTotalImpedance = calculateTotalImpedance(
+        originalImpedance,
+        components,
+        frequency
+      );
+
+      setTotalImpedance(updatedTotalImpedance);
+    }
   }, [originalImpedance, components, frequency]);
 
   return (
@@ -191,12 +201,14 @@ function Smith() {
           value={inputImpedance.ref}
           onChange={handleInputChange}
         />
-        <InputGroup.Text>Taajuus</InputGroup.Text>
+        <InputGroup.Text>Taajuus MHz</InputGroup.Text>
         <Form.Control
           type="number"
           name="frequency"
-          value={frequency}
-          onChange={(e) => setFrequency(parseFloat(e.target.value))}
+          step="0.01" // Allow decimals by setting a small step size
+          value={frequencyMHz}
+          //onChange={(e) => setFrequencyMHz(parseFloat(e.target.value))}
+          onChange={handleFrequencyChange}
         />
       </InputGroup>
 

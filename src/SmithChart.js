@@ -129,9 +129,21 @@ const SmithChart = ({ impedance }) => {
 
     svg.selectAll("*").remove();
 
+    // Define the clipping path (mask) to constrain the drawing within the Smith chart circle
+    svg
+      .append("defs")
+      .append("clipPath")
+      .attr("id", "smith-chart-mask")
+      .append("circle")
+      //.attr("cx", width / 2)
+      //.attr("cy", height / 2)
+      .attr("r", radius);
+
+    // Append the main chart group, applying the clipping path
     const chart = svg
       .append("g")
-      .attr("transform", `translate(${width / 2}, ${height / 2})`);
+      .attr("transform", `translate(${width / 2}, ${height / 2})`)
+      .attr("clip-path", "url(#smith-chart-mask)"); // Apply the clip-path
 
     chart
       .append("circle")
