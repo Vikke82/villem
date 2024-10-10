@@ -31,6 +31,7 @@ function Smith() {
   const [components, setComponents] = useState([]);
   const [componentType, setComponentType] = useState("capacitor");
   const [componentValue, setComponentValue] = useState("");
+  // Initialize componentValue as an object with both Z0 and length fields
 
   // Handle changes in input impedance fields
   const handleInputChange = (e) => {
@@ -43,11 +44,37 @@ function Smith() {
   // Function to add a new matching component (e.g., capacitor or inductor)
   const addComponent = (e) => {
     e.preventDefault();
-    setComponents([
-      ...components,
-      { type: componentType, value: parseFloat(componentValue) },
-    ]);
-    setComponentValue("");
+
+    let newComponent;
+
+    if (componentType === "transmissionline") {
+      // Validate that both Z0 and length are set for transmission line
+      if (componentValue.Z0 !== "" && componentValue.length !== "") {
+        newComponent = {
+          type: "transmissionline",
+          Z0: parseFloat(componentValue.Z0),
+          length: parseFloat(componentValue.length),
+        };
+      } else {
+        console.error("Transmission line parameters missing."); // Debugging
+        return; // Do not add incomplete component
+      }
+    } else {
+      // For all other component types, ensure value is valid
+      const value = parseFloat(componentValue);
+      if (isNaN(value) || value === "") {
+        console.error("Invalid component value."); // Debugging
+        return; // Do not add incomplete component
+      }
+
+      newComponent = {
+        type: componentType,
+        value,
+      };
+    }
+
+    setComponents([...components, newComponent]);
+    setComponentValue(""); // Reset component value after adding
   };
 
   // Calculate the total impedance considering original impedance and all matching components
@@ -57,6 +84,7 @@ function Smith() {
     console.log(frequency);
 
     components.forEach((component) => {
+      console.log("Component:", component);
       switch (component.type) {
         case "capacitor":
           // Series capacitor: Z = -j / (ωC)
@@ -80,6 +108,51 @@ function Smith() {
           totalImpedance = totalImpedance.add(inductiveReactance);
           break;
 
+        // Add case for transmission line
+        case "transmissionline":
+          // Transmission line parameters
+          const Z0 = component.Z0; // Characteristic impedance of the transmission line
+          const length = component.length; // Length of the transmission line in meters
+          const referenceZ0 = inputImpedance.ref; // Reference impedance for normalization
+          // Normalize Zin with respect to the reference impedance
+          const ZinNormalized = new Complex(
+            totalImpedance.real / inputImpedance.ref,
+            totalImpedance.imag / inputImpedance.ref
+          );
+
+          // Calculate the electrical length θ (in radians)
+          const v = 3e8; // Assuming speed of light in vacuum (adjust if necessary for the medium)
+          const theta = (2 * Math.PI * frequency * length) / v;
+
+          // Transform total impedance based on transmission line properties
+          const tanTheta = Math.tan(theta);
+          const Z0_c = new Complex(Z0, 0);
+          console.log("Z0_c:", Z0_c.toString());
+          console.log("tanTheta:", tanTheta);
+          console.log("theta:", theta);
+          console.log("length:", length);
+
+          // Transmission line formula: Z_out = Z0 * (Z_in + jZ0 tan(θ)) / (Z0 + jZ_in tan(θ))
+          // const transformedImpedance = Z0_c.mul(
+          //   totalImpedance.add(new Complex(0, Z0_c * tanTheta))
+          // ).div(Z0_c.add(totalImpedance.mul(tanTheta)));
+
+          // Transmission line formula in normalized form:
+          // z_out = z0 * (z_in + j * tan(θ)) / (1 + j * z_in * tan(θ))
+          const Z0Normalized = Z0 / referenceZ0; // Normalize Z0 to the reference impedance
+          const jTanTheta = new Complex(0, tanTheta);
+          const numerator = ZinNormalized.add(jTanTheta.mul(Z0Normalized));
+          const denominator = new Complex(1, 0).add(
+            jTanTheta.mul(ZinNormalized)
+          );
+          const ZoutNormalized = numerator.div(denominator);
+
+          // Denormalize back to actual impedance
+          const Zout = ZoutNormalized.mul(referenceZ0);
+
+          totalImpedance = Zout; //transformedImpedance;
+          break;
+
         case "paracapacitor":
           const paracapacitiveReactance = new Complex(
             0,
@@ -92,10 +165,11 @@ function Smith() {
             "Total Impedance before inversion:",
             totalImpedance.toString()
           );
+          console.log("paracapacitiveReactance:", paracapacitiveReactance);
 
-          totalImpedance =
-            (paracapacitiveReactance * totalImpedance) /
-            (paracapacitiveReactance + totalImpedance);
+          totalImpedance = paracapacitiveReactance
+            .mul(totalImpedance)
+            .div(paracapacitiveReactance.add(totalImpedance));
 
           break;
 
@@ -105,9 +179,10 @@ function Smith() {
             0,
             (2 * Math.PI * frequency * component.value) / inputImpedance.ref
           );
-          totalImpedance =
-            (parainductorReactance * totalImpedance) /
-            (parainductorReactance + totalImpedance);
+
+          totalImpedance = parainductorReactance
+            .mul(totalImpedance)
+            .div(parainductorReactance.add(totalImpedance));
           break;
 
         default:
@@ -216,20 +291,59 @@ function Smith() {
         <InputGroup size="sm" className="mb-3">
           <InputGroup.Text>Lisää komponentti</InputGroup.Text>
           <Form.Select
-            onChange={(e) => setComponentType(e.target.value)}
+            onChange={(e) => {
+              setComponentType(e.target.value);
+              setComponentValue(""); // Reset component value when type changes
+            }}
             value={componentType}
           >
             <option value="capacitor">Sarjakondensaattori</option>
             <option value="inductor">Sarjainduktanssi</option>
             <option value="paracapacitor">Rinnankondensaattori</option>
             <option value="parainductor">Rinnaninduktanssi</option>
+            <option value="transmissionline">Transmission Line</option>{" "}
+            {/* New Component */}
           </Form.Select>
-          <Form.Control
-            type="number"
-            placeholder="Arvo"
-            onChange={(e) => setComponentValue(e.target.value)}
-            value={componentValue}
-          />
+          {componentType !== "transmissionline" && (
+            <Form.Control
+              type="number"
+              placeholder="Arvo"
+              onChange={(e) => setComponentValue(e.target.value)}
+              value={componentValue}
+            />
+          )}
+          {/* Input fields for transmission line */}
+          {componentType === "transmissionline" && (
+            <>
+              <InputGroup.Text>Z0 (Ohms)</InputGroup.Text>
+              <Form.Control
+                type="number"
+                placeholder="Characteristic Impedance"
+                onChange={(e) => {
+                  const z0 = parseFloat(e.target.value);
+                  setComponentValue((prev) => ({
+                    ...prev,
+                    Z0: isNaN(z0) ? "" : z0,
+                  }));
+                }}
+                value={componentValue.Z0 || ""}
+              />
+              <InputGroup.Text>Length (m)</InputGroup.Text>
+              <Form.Control
+                type="number"
+                placeholder="Length"
+                onChange={(e) => {
+                  const length = parseFloat(e.target.value);
+                  setComponentValue((prev) => ({
+                    ...prev,
+                    length: isNaN(length) ? "" : length,
+                  }));
+                }}
+                value={componentValue.length || ""}
+              />
+            </>
+          )}
+
           <button type="submit">Lisää</button>
         </InputGroup>
       </form>
